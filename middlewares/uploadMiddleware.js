@@ -29,7 +29,7 @@ const multerFilter = function (req, file, cb) {
 
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 
-exports.uploadCategoryImage = upload.single("image");
+exports.uploadTweetImage = upload.single("image");
 
 exports.resizeImage = asyncHandler(async (req, res, next) => {
   const filename = `user-${uuidv4()}-${Date.now()}.jpeg`;
@@ -38,8 +38,8 @@ exports.resizeImage = asyncHandler(async (req, res, next) => {
       .resize(600, 600)
       .toFormat("jpeg")
       .jpeg({ quality: 90 })
-      .toFile(`uploads/users/${filename}`);
-    req.body.image = filename;
+      .toFile(`uploads/${filename}`);
+    req.body.tweetImage = filename;
   }
 
   next();

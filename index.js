@@ -9,6 +9,7 @@ dotenv.config({ path: "config.env" });
 
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
+const tweetRoute = require("./routes/tweetRoute");
 
 const ApiError = require("./utils/apiErrors");
 const globalError = require("./middlewares/errorMiddleware");
@@ -32,6 +33,7 @@ if (process.env.NODE_ENV === "development") {
 //routes
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/myTweets", tweetRoute);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));

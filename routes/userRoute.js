@@ -41,10 +41,7 @@ router.use(
   authController.allowedTo("admin", "manager")
 );
 
-router
-  .route("/")
-  .get(getUsers)
-  .post(uploadCategoryImage, resizeImage, createUserValidator, createUser);
+router.route("/").get(getUsers).post(createUserValidator, createUser);
 router
   .route("/:id")
   .get(getUserValidator, getUser)
