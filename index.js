@@ -6,7 +6,6 @@ const cors = require("cors");
 const compression = require("compression");
 const dbConnection = require("./config/database");
 dotenv.config({ path: "config.env" });
-const path = require("path");
 
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
