@@ -6,6 +6,7 @@ const cors = require("cors");
 const compression = require("compression");
 const dbConnection = require("./config/database");
 dotenv.config({ path: "config.env" });
+const path = require("path");
 
 const userRoute = require("./routes/userRoute");
 const authRoute = require("./routes/authRoute");
@@ -17,6 +18,7 @@ const globalError = require("./middlewares/errorMiddleware");
 dbConnection();
 
 const app = express();
+app.use("/", express.static(path.join(__dirname, "/public")));
 app.use(cors());
 app.options("*", cors());
 
@@ -35,9 +37,7 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/myTweets", tweetRoute);
 
-app.all("*", (req, res, next) => {
-  next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
-});
+app.all("*", require("./routes/root"));
 
 //global error handling middleware within express
 app.use(globalError);
