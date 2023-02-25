@@ -36,7 +36,13 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/myTweets", tweetRoute);
 
-app.all("*", require("./routes/root"));
+app.all("*", (req, res, next) => {
+  if (req.accepts("html")) {
+    res.sendFile(path.join(__dirname, "views", "index.html"));
+  } else {
+    next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
+  }
+});
 
 //global error handling middleware within express
 app.use(globalError);
